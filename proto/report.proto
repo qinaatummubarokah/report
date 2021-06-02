@@ -1,0 +1,13 @@
+syntax = "proto3";
+option go_package = "github.com/junereycasuga/gokit-grpc-demo/pb";
+
+message Empty {}
+
+message Data {
+    string id = 1;
+    string name = 2;
+}
+
+service Service {
+  rpc GetReport(Empty) returns (Data){}
+}
