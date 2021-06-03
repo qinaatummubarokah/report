@@ -2,74 +2,133 @@ package transport
 
 import (
 	"context"
-	"log"
-	"os"
+	"reflect"
+	pb "report/proto"
+	"report/repository"
+
+	"github.com/go-kit/kit/log"
+
+	// apmgrpc "git.bluebird.id/lib/apm/grpc"
+
 	"report/endpoint"
 
-	"report/proto"
-	"report/repository"
-	"report/repository/postgres"
-
-	"github.com/go-kit/kit/auth/jwt"
-	grpctransport "github.com/go-kit/kit/transport/grpc"
+	gt "github.com/go-kit/kit/transport/grpc"
 )
 
 //GrpcServer ....
 type GrpcServer struct {
-	getReport grpctransport.Handler
+	getReport gt.Handler
 }
 
-func NewGRPCServer() *GrpcServer {
-	// start database conn
-	repo, err := postgres.NewPostgresConn(repository.DBConfiguration{
-		// Default Value
-		DBHost:     config.Get(constant.DBHostKey, "127.0.0.1"),
-		DBName:     config.Get(constant.DBNameKey, "postgres"),
-		DBOptions:  config.Get(constant.DBOptionsKey, "?sslmode=disable"),
-		DBPassword: config.Get(constant.DBPasswordKey, ""),
-		DBPort:     config.Get(constant.DBPortKey, "5432"),
-		DBUser:     config.Get(constant.DBUserKey, "postgres"),
-	})
-	if err != nil {
-		log.Println(err)
-		os.Exit(1)
-	}
+// //GRPCServerRun run grpc server
+// func GRPCServerRun(
+// 	addr string,
+// 	recruitmentSrv pb.ServiceServer,
+// ) {
+// 	errs := make(chan error)
+// 	go func() {
+// 		c := make(chan os.Signal)
+// 		signal.Notify(c, syscall.SIGINT, syscall.SIGTERM, syscall.SIGALRM)
+// 		errs <- fmt.Errorf("%s", <-c)
+// 	}()
 
-	svc := service.NewRecruitmentService(repo)
+// 	grpcListener, err := net.Listen("tcp", addr)
+// 	if err != nil {
+// 		log.Println(err)
+// 		os.Exit(1)
+// 	}
 
-	endpoint := endpoint.MakeEndpoints(&svc)
+// 	var opts []grpc.ServerOption
+// 	opts = apmgrpc.GetElasticAPMServerOptions()
 
-	handlerOpt := []grpctransport.ServerOption{
-		grpctransport.ServerBefore(jwt.GRPCToContext()),
-	}
+// 	go func() {
+// 		baseServer := grpc.NewServer(opts...)
 
+// 		pb.RegisterServiceServer(baseServer, recruitmentSrv)
+
+// 		log.Println("🚀 Server recruitment started successfully 🚀 - Running on", addr)
+// 		baseServer.Serve(grpcListener)
+// 	}()
+
+// 	log.Println("exit", <-errs)
+// }
+
+// func NewGRPCServer() *GrpcServer {
+// 	// start database conn
+// 	repo, err := postgres.NewPostgresConn(repository.DBConfiguration{
+// 		// Default Value
+// 		DBHost:     config.Get(constant.DBHostKey, "127.0.0.1"),
+// 		DBName:     config.Get(constant.DBNameKey, "postgres"),
+// 		DBOptions:  config.Get(constant.DBOptionsKey, "?sslmode=disable"),
+// 		DBPassword: config.Get(constant.DBPasswordKey, ""),
+// 		DBPort:     config.Get(constant.DBPortKey, "5432"),
+// 		DBUser:     config.Get(constant.DBUserKey, "postgres"),
+// 	})
+// 	if err != nil {
+// 		log.Println(err)
+// 		os.Exit(1)
+// 	}
+
+// 	svc := service.NewService(repo)
+
+// 	endpoint := endpoint.MakeEndpoints(&svc)
+
+// 	// handlerOpt := []grpctransport.ServerOption{
+// 	// 	grpctransport.ServerBefore(jwt.GRPCToContext()),
+// 	// }
+
+// 	return &GrpcServer{
+// 		getReport: grpctransport.NewServer(
+// 			endpoint.GetReport,
+// 			decodeGetReport,
+// 			encodeGetReport,
+// 			// handlerOpt...,
+// 		),
+// 	}
+// }
+
+// NewGRPCServer initializes a new gRPC server
+func NewGRPCServer(endpoint endpoint.Endpoint, logger log.Logger) pb.ServiceServer {
 	return &GrpcServer{
-		getReport: grpctransport.NewServer(
+		getReport: gt.NewServer(
 			endpoint.GetReport,
 			decodeGetReport,
 			encodeGetReport,
-			// handlerOpt...,
 		),
 	}
 }
 
-func (g *GrpcServer) GetReport(ctx context.Context, request *proto.Empty) (*proto.Data, error) {
-	if _, resp, err := g.createReport.ServeGRPC(ctx, request); err != nil {
+func (g *GrpcServer) GetReport(ctx context.Context, request *pb.Empty) (*pb.Data, error) {
+	_, resp, err := g.getReport.ServeGRPC(ctx, request)
+	if err != nil {
 		return nil, err
 	}
-	return resp.(*proto.Data), nil
+	println("xxxxx")
+	return resp.(*pb.Data), nil
 }
 
 func decodeGetReport(ctx context.Context, request interface{}) (interface{}, error) {
-	req := request.(*proto.GetReportRequest)
-	return &proto.Empty{}, nil
+	// req := request.(pb.Data)
+	return &pb.Empty{}, nil
 }
 
-func encodeGetReport(ctx context.Context, resp interface{}) (interface{}, error) {
-	esp := resp.(model.Data)
-	return &proto.Data{
-		// RegionId:  []byte(resp.RegionID.String()),
-		ID:   resp.id,
-		Name: resp.name,
-	}, nil
+// func encodeGetReport(ctx context.Context, resp interface{}) (interface{}, error) {
+// 	println("hmmmmmmmmm")
+// 	resp = resp.(endpoint.OtherResp)
+// 	println("resp: ", resp)
+// 	return &pb.Data{Id: resp.(pb.Data).Id, Name: resp.(pb.Data).Name}, nil
+// }
+
+func encodeGetReport(ctx context.Context, response interface{}) (interface{}, error) {
+	var transforms []*pb.DataDb
+	s := reflect.ValueOf(response)
+
+	for i := 0; i < s.Len(); i++ {
+		var row pb.DataDb
+		curentData := s.Index(i).Interface().(repository.Data)
+		row.Id = curentData.ID
+		row.Name = curentData.Name
+		transforms = append(transforms, &row)
+	}
+	return &pb.Data{Data: transforms}, nil
 }

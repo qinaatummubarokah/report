@@ -3,7 +3,8 @@ package service
 import (
 	"context"
 	"fmt"
-	"log"
+
+	"github.com/go-kit/kit/log"
 
 	"report/repository"
 )
@@ -33,5 +34,5 @@ func (s *service) GetReport(ctx context.Context) (interface{}, error) {
 	}
 
 	fmt.Println("transaction mybb : ", transactionEcv)
-	return "success", nil
+	return transactionEcv, nil
 }

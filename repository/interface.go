@@ -1,6 +1,8 @@
 package repository
 
-import "context"
+import (
+	"context"
+)
 
 // type DBReaderWriter interface {
 // 	// TODO: Create your repo here
@@ -10,5 +12,5 @@ import "context"
 
 // Service interface
 type DBReaderWriter interface {
-	GetData(ctx context.Context) (interface{}, error)
+	GetReport(ctx context.Context) ([]Data, error)
 }

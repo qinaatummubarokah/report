@@ -11,6 +11,10 @@ type Endpoint struct {
 	GetReport endpoint.Endpoint
 }
 
+type OtherResp struct {
+	Result interface{}
+}
+
 func MakeEndpoints(s service.Service) Endpoint {
 	return Endpoint{
 		GetReport: makeGetReportEndpoint(s),

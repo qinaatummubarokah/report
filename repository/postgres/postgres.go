@@ -5,16 +5,71 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"report/repository"
 	"sync"
+	"time"
+
+	"report/repository"
+
+	_ "github.com/lib/pq"
 )
+
+type ConnParam struct {
+	Host        string
+	Port        string
+	DBName      string
+	User        string
+	Pass        string
+	Options     string
+	MaxOpenConn int
+	MaxIdleConn int
+	MaxLifetime time.Duration
+}
 
 type postgres struct {
 	db *sql.DB
 	mu sync.RWMutex
 }
 
-func (p *postgres) GetReport(ctx context.Context) (result []repository.Data, err error) {
+func NewPostgresSql(p *ConnParam) (repository.Repository, error) {
+	// psqlconn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	// 	p.Host, p.Port, p.User, p.Pass, p.DBName)
+
+	psqlconn := "postgres://postgres:@127.0.0.1:5432/postgres?sslmode=disable&search_path=public"
+	print(psqlconn)
+	db, err := sql.Open("postgres", psqlconn)
+	print("\n db: ", db)
+	print("\n dberr: ", err)
+	if err != nil {
+		print("\n here: ", err)
+		return nil, fmt.Errorf("db open: %v", err)
+	}
+	if err := db.Ping(); err != nil {
+		print("\n PONG22")
+		return nil, err
+	}
+	print("\n PONG")
+	db.SetMaxOpenConns(p.MaxOpenConn)
+	db.SetMaxIdleConns(p.MaxIdleConn)
+	db.SetConnMaxLifetime(p.MaxLifetime)
+	return &postgres{db: db}, nil
+}
+
+// Close ...
+func (p *postgres) Close() error {
+	if p.db != nil {
+		if err := p.db.Close(); err != nil {
+			return err
+		}
+		p.db = nil
+	}
+	return nil
+}
+
+const (
+	getTransaction = "select pt.id,pt.identifier ,pt.fare ,pt.cv_number ,pt.created_at ,pt.sap_sent_at,pt.order_id ,pt.itop_id ,pt.paid_amount ,pt.discount_amt ,a.account_code from payment_transactions pt"
+)
+
+func (p *postgres) GetData(ctx context.Context) (result []repository.Data, err error) {
 	p.mu.RLock()
 	defer p.mu.RUnlock()
 
@@ -46,66 +101,4 @@ func (p *postgres) GetReport(ctx context.Context) (result []repository.Data, err
 	}
 	log.Println("data", result)
 	return result, nil
-}
-
-// NewPostgresConn ...
-func NewPostgresConn(conf repository.DBConfiguration) (repository.DBReaderWriter, error) {
-	connURL := fmt.Sprintf(
-		"postgres://%s:%s@%s:%s/%s%s",
-		conf.DBUser,
-		conf.DBPassword,
-		conf.DBHost,
-		conf.DBPort,
-		conf.DBName,
-		conf.DBOptions)
-
-	logger.Info(fmt.Sprintf(
-		"Postgres connection: postgres://%s:%s@%s:%s/%s%s",
-		conf.DBUser,
-		conf.DBPassword,
-		conf.DBHost,
-		conf.DBPort,
-		conf.DBName,
-		conf.DBOptions))
-
-	db, err := sql.Open(driverName, connURL)
-	if err != nil {
-		return nil, err
-	}
-	if err := db.Ping(); err != nil {
-		return nil, err
-	}
-	logger.Info("DB Says PONG!")
-
-	// GORM for Auto Migrate
-	// gormClient, err := gorm.Open(postgres.New(postgres.Config{
-	// 	Conn: db,
-	// }), &gorm.Config{})
-	// if err != nil {
-	// 	logger.Info(fmt.Sprintf("create gorm client instance failed with message: %s", err.Error()))
-	// 	os.Exit(1)
-	// }
-	// gormClient.AutoMigrate(
-	// 	&datamaster.WritePoolRequest{}, &datamaster.WriteRegionRequest{},
-	// )
-	// logger.Info("Table Migrated")
-
-	// // Adding Dummy Data using GORM
-	// regionID, _ := uuid.NewV4()
-	// if err := gormClient.Create(&datamaster.WriteRegionRequest{
-	// 	RegionID:  regionID,
-	// 	Kelurahan: "Klender",
-	// 	Kecamatan: "Duren Sawit",
-	// 	JenisKota: "KOTA",
-	// 	Kota:      "Jakarta Timur",
-	// 	Provinsi:  "DKI Jakarta",
-	// 	KodePos:   "13470",
-	// }).Error; err != nil {
-	// 	logger.Error(err)
-	// }
-	// logger.Info("Data Inserted")
-
-	return &postgresConn{
-		db: db,
-	}, nil
 }
