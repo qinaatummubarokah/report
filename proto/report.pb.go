@@ -26,6 +26,34 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+type UploadStatusCode int32
+
+const (
+	UploadStatusCode_Unknown UploadStatusCode = 0
+	UploadStatusCode_Ok      UploadStatusCode = 1
+	UploadStatusCode_Failed  UploadStatusCode = 2
+)
+
+var UploadStatusCode_name = map[int32]string{
+	0: "Unknown",
+	1: "Ok",
+	2: "Failed",
+}
+
+var UploadStatusCode_value = map[string]int32{
+	"Unknown": 0,
+	"Ok":      1,
+	"Failed":  2,
+}
+
+func (x UploadStatusCode) String() string {
+	return proto.EnumName(UploadStatusCode_name, int32(x))
+}
+
+func (UploadStatusCode) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_a3c6fc36ea1be244, []int{0}
+}
+
 type Empty struct {
 }
 
@@ -107,8 +135,63 @@ func (m *Data) GetData() []*DataDb {
 }
 
 type DataDb struct {
-	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Id                    string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Fare                  string `protobuf:"bytes,2,opt,name=fare,proto3" json:"fare,omitempty"`
+	Extra                 string `protobuf:"bytes,3,opt,name=extra,proto3" json:"extra,omitempty"`
+	DiscountAmt           string `protobuf:"bytes,4,opt,name=discount_amt,json=discountAmt,proto3" json:"discount_amt,omitempty"`
+	PaidAmount            string `protobuf:"bytes,5,opt,name=paid_amount,json=paidAmount,proto3" json:"paid_amount,omitempty"`
+	PromoCode             string `protobuf:"bytes,6,opt,name=promo_code,json=promoCode,proto3" json:"promo_code,omitempty"`
+	PaymentToken          string `protobuf:"bytes,7,opt,name=payment_token,json=paymentToken,proto3" json:"payment_token,omitempty"`
+	TransactionTime       string `protobuf:"bytes,8,opt,name=transaction_time,json=transactionTime,proto3" json:"transaction_time,omitempty"`
+	Identifier            string `protobuf:"bytes,9,opt,name=identifier,proto3" json:"identifier,omitempty"`
+	PaymentType           string `protobuf:"bytes,10,opt,name=payment_type,json=paymentType,proto3" json:"payment_type,omitempty"`
+	VehicleId             string `protobuf:"bytes,11,opt,name=vehicle_id,json=vehicleId,proto3" json:"vehicle_id,omitempty"`
+	VehicleName           string `protobuf:"bytes,12,opt,name=vehicle_name,json=vehicleName,proto3" json:"vehicle_name,omitempty"`
+	ServiceType           string `protobuf:"bytes,13,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"`
+	DriverId              string `protobuf:"bytes,14,opt,name=driver_id,json=driverId,proto3" json:"driver_id,omitempty"`
+	PickUpSuburb          string `protobuf:"bytes,15,opt,name=pick_up_suburb,json=pickUpSuburb,proto3" json:"pick_up_suburb,omitempty"`
+	PickUpArea            string `protobuf:"bytes,16,opt,name=pick_up_area,json=pickUpArea,proto3" json:"pick_up_area,omitempty"`
+	DestinationArea       string `protobuf:"bytes,17,opt,name=destination_area,json=destinationArea,proto3" json:"destination_area,omitempty"`
+	DestinationSuburb     string `protobuf:"bytes,18,opt,name=destination_suburb,json=destinationSuburb,proto3" json:"destination_suburb,omitempty"`
+	PickUpLatitude        string `protobuf:"bytes,19,opt,name=pick_up_latitude,json=pickUpLatitude,proto3" json:"pick_up_latitude,omitempty"`
+	PickUpLng             string `protobuf:"bytes,20,opt,name=pick_up_lng,json=pickUpLng,proto3" json:"pick_up_lng,omitempty"`
+	PaymentProfileId      string `protobuf:"bytes,21,opt,name=payment_profile_id,json=paymentProfileId,proto3" json:"payment_profile_id,omitempty"`
+	State                 string `protobuf:"bytes,22,opt,name=state,proto3" json:"state,omitempty"`
+	ReleasedAt            string `protobuf:"bytes,23,opt,name=released_at,json=releasedAt,proto3" json:"released_at,omitempty"`
+	CompletedAt           string `protobuf:"bytes,24,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	CreatedAt             string `protobuf:"bytes,25,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt             string `protobuf:"bytes,26,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	CcIdentifier          string `protobuf:"bytes,27,opt,name=cc_identifier,json=ccIdentifier,proto3" json:"cc_identifier,omitempty"`
+	AccountId             string `protobuf:"bytes,28,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	SapSentAt             string `protobuf:"bytes,29,opt,name=sap_sent_at,json=sapSentAt,proto3" json:"sap_sent_at,omitempty"`
+	SapState              string `protobuf:"bytes,30,opt,name=sap_state,json=sapState,proto3" json:"sap_state,omitempty"`
+	MsakuState            string `protobuf:"bytes,31,opt,name=msaku_state,json=msakuState,proto3" json:"msaku_state,omitempty"`
+	CvNumber              string `protobuf:"bytes,32,opt,name=cv_number,json=cvNumber,proto3" json:"cv_number,omitempty"`
+	ValidityPeriod        string `protobuf:"bytes,33,opt,name=validity_period,json=validityPeriod,proto3" json:"validity_period,omitempty"`
+	ItopId                string `protobuf:"bytes,34,opt,name=itop_id,json=itopId,proto3" json:"itop_id,omitempty"`
+	OrderId               string `protobuf:"bytes,35,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	PickupAdress          string `protobuf:"bytes,36,opt,name=pickup_adress,json=pickupAdress,proto3" json:"pickup_adress,omitempty"`
+	PickedUpAt            string `protobuf:"bytes,37,opt,name=picked_up_at,json=pickedUpAt,proto3" json:"picked_up_at,omitempty"`
+	TripPurpose           string `protobuf:"bytes,38,opt,name=trip_purpose,json=tripPurpose,proto3" json:"trip_purpose,omitempty"`
+	MsakuTransactionId    string `protobuf:"bytes,39,opt,name=msaku_transaction_id,json=msakuTransactionId,proto3" json:"msaku_transaction_id,omitempty"`
+	TripPurposedriverName string `protobuf:"bytes,40,opt,name=trip_purposedriver_name,json=tripPurposedriverName,proto3" json:"trip_purposedriver_name,omitempty"`
+	ExternalOrderId       string `protobuf:"bytes,41,opt,name=external_order_id,json=externalOrderId,proto3" json:"external_order_id,omitempty"`
+	RouteImage            string `protobuf:"bytes,42,opt,name=route_image,json=routeImage,proto3" json:"route_image,omitempty"`
+	DepartmentName        string `protobuf:"bytes,43,opt,name=department_name,json=departmentName,proto3" json:"department_name,omitempty"`
+	AccountCode           string `protobuf:"bytes,44,opt,name=account_code,json=accountCode,proto3" json:"account_code,omitempty"`
+	UserName              string `protobuf:"bytes,45,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
+	InvoiceNumber         string `protobuf:"bytes,46,opt,name=invoice_number,json=invoiceNumber,proto3" json:"invoice_number,omitempty"`
+	PostingDate           string `protobuf:"bytes,47,opt,name=posting_date,json=postingDate,proto3" json:"posting_date,omitempty"`
+	Distance              string `protobuf:"bytes,48,opt,name=distance,proto3" json:"distance,omitempty"`
+	OtherInformation      string `protobuf:"bytes,49,opt,name=other_information,json=otherInformation,proto3" json:"other_information,omitempty"`
+	PickUpLat             string `protobuf:"bytes,50,opt,name=pick_up_lat,json=pickUpLat,proto3" json:"pick_up_lat,omitempty"`
+	DestinationLat        string `protobuf:"bytes,51,opt,name=destination_lat,json=destinationLat,proto3" json:"destination_lat,omitempty"`
+	DestinationLng        string `protobuf:"bytes,52,opt,name=destination_lng,json=destinationLng,proto3" json:"destination_lng,omitempty"`
+	MsakuResponse         string `protobuf:"bytes,53,opt,name=msaku_response,json=msakuResponse,proto3" json:"msaku_response,omitempty"`
+	PickupAddress         string `protobuf:"bytes,54,opt,name=pickup_address,json=pickupAddress,proto3" json:"pickup_address,omitempty"`
+	DropoffAddress        string `protobuf:"bytes,55,opt,name=dropoff_address,json=dropoffAddress,proto3" json:"dropoff_address,omitempty"`
+	Tips                  string `protobuf:"bytes,56,opt,name=tips,proto3" json:"tips,omitempty"`
+	DriverName            string `protobuf:"bytes,57,opt,name=driver_name,json=driverName,proto3" json:"driver_name,omitempty"`
 }
 
 func (m *DataDb) Reset()         { *m = DataDb{} }
@@ -151,38 +234,583 @@ func (m *DataDb) GetId() string {
 	return ""
 }
 
-func (m *DataDb) GetName() string {
+func (m *DataDb) GetFare() string {
 	if m != nil {
-		return m.Name
+		return m.Fare
 	}
 	return ""
 }
 
+func (m *DataDb) GetExtra() string {
+	if m != nil {
+		return m.Extra
+	}
+	return ""
+}
+
+func (m *DataDb) GetDiscountAmt() string {
+	if m != nil {
+		return m.DiscountAmt
+	}
+	return ""
+}
+
+func (m *DataDb) GetPaidAmount() string {
+	if m != nil {
+		return m.PaidAmount
+	}
+	return ""
+}
+
+func (m *DataDb) GetPromoCode() string {
+	if m != nil {
+		return m.PromoCode
+	}
+	return ""
+}
+
+func (m *DataDb) GetPaymentToken() string {
+	if m != nil {
+		return m.PaymentToken
+	}
+	return ""
+}
+
+func (m *DataDb) GetTransactionTime() string {
+	if m != nil {
+		return m.TransactionTime
+	}
+	return ""
+}
+
+func (m *DataDb) GetIdentifier() string {
+	if m != nil {
+		return m.Identifier
+	}
+	return ""
+}
+
+func (m *DataDb) GetPaymentType() string {
+	if m != nil {
+		return m.PaymentType
+	}
+	return ""
+}
+
+func (m *DataDb) GetVehicleId() string {
+	if m != nil {
+		return m.VehicleId
+	}
+	return ""
+}
+
+func (m *DataDb) GetVehicleName() string {
+	if m != nil {
+		return m.VehicleName
+	}
+	return ""
+}
+
+func (m *DataDb) GetServiceType() string {
+	if m != nil {
+		return m.ServiceType
+	}
+	return ""
+}
+
+func (m *DataDb) GetDriverId() string {
+	if m != nil {
+		return m.DriverId
+	}
+	return ""
+}
+
+func (m *DataDb) GetPickUpSuburb() string {
+	if m != nil {
+		return m.PickUpSuburb
+	}
+	return ""
+}
+
+func (m *DataDb) GetPickUpArea() string {
+	if m != nil {
+		return m.PickUpArea
+	}
+	return ""
+}
+
+func (m *DataDb) GetDestinationArea() string {
+	if m != nil {
+		return m.DestinationArea
+	}
+	return ""
+}
+
+func (m *DataDb) GetDestinationSuburb() string {
+	if m != nil {
+		return m.DestinationSuburb
+	}
+	return ""
+}
+
+func (m *DataDb) GetPickUpLatitude() string {
+	if m != nil {
+		return m.PickUpLatitude
+	}
+	return ""
+}
+
+func (m *DataDb) GetPickUpLng() string {
+	if m != nil {
+		return m.PickUpLng
+	}
+	return ""
+}
+
+func (m *DataDb) GetPaymentProfileId() string {
+	if m != nil {
+		return m.PaymentProfileId
+	}
+	return ""
+}
+
+func (m *DataDb) GetState() string {
+	if m != nil {
+		return m.State
+	}
+	return ""
+}
+
+func (m *DataDb) GetReleasedAt() string {
+	if m != nil {
+		return m.ReleasedAt
+	}
+	return ""
+}
+
+func (m *DataDb) GetCompletedAt() string {
+	if m != nil {
+		return m.CompletedAt
+	}
+	return ""
+}
+
+func (m *DataDb) GetCreatedAt() string {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return ""
+}
+
+func (m *DataDb) GetUpdatedAt() string {
+	if m != nil {
+		return m.UpdatedAt
+	}
+	return ""
+}
+
+func (m *DataDb) GetCcIdentifier() string {
+	if m != nil {
+		return m.CcIdentifier
+	}
+	return ""
+}
+
+func (m *DataDb) GetAccountId() string {
+	if m != nil {
+		return m.AccountId
+	}
+	return ""
+}
+
+func (m *DataDb) GetSapSentAt() string {
+	if m != nil {
+		return m.SapSentAt
+	}
+	return ""
+}
+
+func (m *DataDb) GetSapState() string {
+	if m != nil {
+		return m.SapState
+	}
+	return ""
+}
+
+func (m *DataDb) GetMsakuState() string {
+	if m != nil {
+		return m.MsakuState
+	}
+	return ""
+}
+
+func (m *DataDb) GetCvNumber() string {
+	if m != nil {
+		return m.CvNumber
+	}
+	return ""
+}
+
+func (m *DataDb) GetValidityPeriod() string {
+	if m != nil {
+		return m.ValidityPeriod
+	}
+	return ""
+}
+
+func (m *DataDb) GetItopId() string {
+	if m != nil {
+		return m.ItopId
+	}
+	return ""
+}
+
+func (m *DataDb) GetOrderId() string {
+	if m != nil {
+		return m.OrderId
+	}
+	return ""
+}
+
+func (m *DataDb) GetPickupAdress() string {
+	if m != nil {
+		return m.PickupAdress
+	}
+	return ""
+}
+
+func (m *DataDb) GetPickedUpAt() string {
+	if m != nil {
+		return m.PickedUpAt
+	}
+	return ""
+}
+
+func (m *DataDb) GetTripPurpose() string {
+	if m != nil {
+		return m.TripPurpose
+	}
+	return ""
+}
+
+func (m *DataDb) GetMsakuTransactionId() string {
+	if m != nil {
+		return m.MsakuTransactionId
+	}
+	return ""
+}
+
+func (m *DataDb) GetTripPurposedriverName() string {
+	if m != nil {
+		return m.TripPurposedriverName
+	}
+	return ""
+}
+
+func (m *DataDb) GetExternalOrderId() string {
+	if m != nil {
+		return m.ExternalOrderId
+	}
+	return ""
+}
+
+func (m *DataDb) GetRouteImage() string {
+	if m != nil {
+		return m.RouteImage
+	}
+	return ""
+}
+
+func (m *DataDb) GetDepartmentName() string {
+	if m != nil {
+		return m.DepartmentName
+	}
+	return ""
+}
+
+func (m *DataDb) GetAccountCode() string {
+	if m != nil {
+		return m.AccountCode
+	}
+	return ""
+}
+
+func (m *DataDb) GetUserName() string {
+	if m != nil {
+		return m.UserName
+	}
+	return ""
+}
+
+func (m *DataDb) GetInvoiceNumber() string {
+	if m != nil {
+		return m.InvoiceNumber
+	}
+	return ""
+}
+
+func (m *DataDb) GetPostingDate() string {
+	if m != nil {
+		return m.PostingDate
+	}
+	return ""
+}
+
+func (m *DataDb) GetDistance() string {
+	if m != nil {
+		return m.Distance
+	}
+	return ""
+}
+
+func (m *DataDb) GetOtherInformation() string {
+	if m != nil {
+		return m.OtherInformation
+	}
+	return ""
+}
+
+func (m *DataDb) GetPickUpLat() string {
+	if m != nil {
+		return m.PickUpLat
+	}
+	return ""
+}
+
+func (m *DataDb) GetDestinationLat() string {
+	if m != nil {
+		return m.DestinationLat
+	}
+	return ""
+}
+
+func (m *DataDb) GetDestinationLng() string {
+	if m != nil {
+		return m.DestinationLng
+	}
+	return ""
+}
+
+func (m *DataDb) GetMsakuResponse() string {
+	if m != nil {
+		return m.MsakuResponse
+	}
+	return ""
+}
+
+func (m *DataDb) GetPickupAddress() string {
+	if m != nil {
+		return m.PickupAddress
+	}
+	return ""
+}
+
+func (m *DataDb) GetDropoffAddress() string {
+	if m != nil {
+		return m.DropoffAddress
+	}
+	return ""
+}
+
+func (m *DataDb) GetTips() string {
+	if m != nil {
+		return m.Tips
+	}
+	return ""
+}
+
+func (m *DataDb) GetDriverName() string {
+	if m != nil {
+		return m.DriverName
+	}
+	return ""
+}
+
+type Chunk struct {
+	Content []byte `protobuf:"bytes,1,opt,name=Content,proto3" json:"Content,omitempty"`
+}
+
+func (m *Chunk) Reset()         { *m = Chunk{} }
+func (m *Chunk) String() string { return proto.CompactTextString(m) }
+func (*Chunk) ProtoMessage()    {}
+func (*Chunk) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a3c6fc36ea1be244, []int{3}
+}
+func (m *Chunk) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Chunk) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Chunk.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Chunk) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Chunk.Merge(m, src)
+}
+func (m *Chunk) XXX_Size() int {
+	return m.Size()
+}
+func (m *Chunk) XXX_DiscardUnknown() {
+	xxx_messageInfo_Chunk.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Chunk proto.InternalMessageInfo
+
+func (m *Chunk) GetContent() []byte {
+	if m != nil {
+		return m.Content
+	}
+	return nil
+}
+
+type UploadStatus struct {
+	Message string           `protobuf:"bytes,1,opt,name=Message,proto3" json:"Message,omitempty"`
+	Code    UploadStatusCode `protobuf:"varint,2,opt,name=Code,proto3,enum=UploadStatusCode" json:"Code,omitempty"`
+}
+
+func (m *UploadStatus) Reset()         { *m = UploadStatus{} }
+func (m *UploadStatus) String() string { return proto.CompactTextString(m) }
+func (*UploadStatus) ProtoMessage()    {}
+func (*UploadStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a3c6fc36ea1be244, []int{4}
+}
+func (m *UploadStatus) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UploadStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UploadStatus.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UploadStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UploadStatus.Merge(m, src)
+}
+func (m *UploadStatus) XXX_Size() int {
+	return m.Size()
+}
+func (m *UploadStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_UploadStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UploadStatus proto.InternalMessageInfo
+
+func (m *UploadStatus) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func (m *UploadStatus) GetCode() UploadStatusCode {
+	if m != nil {
+		return m.Code
+	}
+	return UploadStatusCode_Unknown
+}
+
 func init() {
+	proto.RegisterEnum("UploadStatusCode", UploadStatusCode_name, UploadStatusCode_value)
 	proto.RegisterType((*Empty)(nil), "Empty")
 	proto.RegisterType((*Data)(nil), "Data")
 	proto.RegisterType((*DataDb)(nil), "DataDb")
+	proto.RegisterType((*Chunk)(nil), "Chunk")
+	proto.RegisterType((*UploadStatus)(nil), "UploadStatus")
 }
 
 func init() { proto.RegisterFile("pb/report.proto", fileDescriptor_a3c6fc36ea1be244) }
 
 var fileDescriptor_a3c6fc36ea1be244 = []byte{
-	// 227 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x24, 0x8f, 0xc1, 0x4a, 0xc4, 0x30,
-	0x14, 0x45, 0x9b, 0xda, 0x69, 0x99, 0x27, 0x28, 0x64, 0x55, 0x54, 0xc2, 0x50, 0x17, 0x0e, 0xe8,
-	0xb4, 0x30, 0xfe, 0x81, 0xcc, 0xe0, 0xbe, 0xee, 0xdc, 0x25, 0xed, 0x23, 0x46, 0xc9, 0x24, 0xc4,
-	0x57, 0x61, 0xfe, 0xc2, 0xcf, 0x72, 0xd9, 0xa5, 0x4b, 0x69, 0x7f, 0x44, 0x8c, 0xbb, 0x7b, 0xcf,
-	0xe2, 0x1e, 0x2e, 0x9c, 0x7b, 0xd5, 0x04, 0xf4, 0x2e, 0x50, 0xed, 0x83, 0x23, 0x57, 0x15, 0xb0,
-	0xd8, 0x5b, 0x4f, 0xc7, 0xea, 0x1a, 0xb2, 0x9d, 0x24, 0xc9, 0x2f, 0x21, 0xeb, 0x25, 0xc9, 0x92,
-	0xad, 0x4e, 0xd6, 0xa7, 0xdb, 0xa2, 0xfe, 0x83, 0x3b, 0xd5, 0x46, 0x58, 0xdd, 0x41, 0xfe, 0xdf,
-	0xf9, 0x19, 0xa4, 0xa6, 0x2f, 0xd9, 0x8a, 0xad, 0x97, 0x6d, 0x6a, 0x7a, 0xce, 0x21, 0x3b, 0x48,
-	0x8b, 0x65, 0x1a, 0x49, 0xcc, 0xdb, 0x1b, 0x28, 0x9e, 0x30, 0x7c, 0x98, 0x0e, 0xf9, 0x15, 0x2c,
-	0x1f, 0x91, 0xda, 0x68, 0xe6, 0x79, 0x1d, 0x95, 0x17, 0x8b, 0x38, 0x5e, 0x25, 0x0f, 0xfb, 0xaf,
-	0x49, 0xb0, 0x71, 0x12, 0xec, 0x67, 0x12, 0xec, 0x73, 0x16, 0xc9, 0x38, 0x8b, 0xe4, 0x7b, 0x16,
-	0xc9, 0xf3, 0xad, 0x36, 0xf4, 0x32, 0xa8, 0xba, 0x73, 0xb6, 0x79, 0x1d, 0x0e, 0x18, 0xf0, 0xd8,
-	0xc9, 0xf7, 0x41, 0xcb, 0x46, 0xbb, 0x37, 0x43, 0x1b, 0x1d, 0x7c, 0xb7, 0xe9, 0xd1, 0xba, 0xc6,
-	0x2b, 0x95, 0xc7, 0x4b, 0xf7, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0xee, 0x29, 0xf8, 0xe9, 0xe5,
-	0x00, 0x00, 0x00,
+	// 1209 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x96, 0xcf, 0x73, 0x13, 0x37,
+	0x14, 0xc7, 0xe3, 0x90, 0xd8, 0xb1, 0x92, 0x38, 0x8e, 0x0a, 0x45, 0x24, 0x60, 0x82, 0x03, 0x25,
+	0xfc, 0x88, 0x43, 0x43, 0xa1, 0xed, 0xd1, 0x05, 0xca, 0x78, 0xa6, 0x05, 0x26, 0x90, 0x4b, 0x2f,
+	0x3b, 0xf2, 0xea, 0xc5, 0x51, 0xed, 0x5d, 0x69, 0xb4, 0x5a, 0x97, 0xfc, 0x17, 0xfd, 0x9f, 0x7a,
+	0xe9, 0x91, 0x63, 0x8f, 0x1d, 0xf8, 0x47, 0x3a, 0x7a, 0x4f, 0x6b, 0x9b, 0xb6, 0xb7, 0xd5, 0xe7,
+	0x7d, 0x57, 0x4f, 0x7a, 0xfa, 0xea, 0xed, 0xb2, 0x2d, 0x3b, 0x3c, 0x72, 0x60, 0x8d, 0xf3, 0x3d,
+	0xeb, 0x8c, 0x37, 0xdd, 0x06, 0x5b, 0x7d, 0x91, 0x59, 0x7f, 0xd1, 0xdd, 0x67, 0x2b, 0xcf, 0xa5,
+	0x97, 0x7c, 0x97, 0xad, 0x28, 0xe9, 0xa5, 0xa8, 0xed, 0x5d, 0x3a, 0x58, 0x3f, 0x6e, 0xf4, 0x02,
+	0x7c, 0x3e, 0x3c, 0x41, 0xd8, 0xfd, 0x63, 0x8b, 0xd5, 0x09, 0xf0, 0x16, 0x5b, 0xd6, 0x4a, 0xd4,
+	0xf6, 0x6a, 0x07, 0xcd, 0x93, 0x65, 0xad, 0x38, 0x67, 0x2b, 0x67, 0xd2, 0x81, 0x58, 0x46, 0x82,
+	0xcf, 0xfc, 0x32, 0x5b, 0x85, 0xf7, 0xde, 0x49, 0x71, 0x09, 0x21, 0x0d, 0xf8, 0x2d, 0xb6, 0xa1,
+	0x74, 0x91, 0x9a, 0x32, 0xf7, 0x89, 0xcc, 0xbc, 0x58, 0xc1, 0xe0, 0x7a, 0xc5, 0xfa, 0x99, 0xe7,
+	0x37, 0xd9, 0xba, 0x95, 0x5a, 0x25, 0x32, 0x0b, 0x44, 0xac, 0xa2, 0x82, 0x05, 0xd4, 0x47, 0xc2,
+	0x6f, 0x30, 0x66, 0x9d, 0xc9, 0x4c, 0x92, 0x1a, 0x05, 0xa2, 0x8e, 0xf1, 0x26, 0x92, 0x67, 0x46,
+	0x01, 0xdf, 0x67, 0x9b, 0x56, 0x5e, 0x64, 0x90, 0xfb, 0xc4, 0x9b, 0x31, 0xe4, 0xa2, 0x81, 0x8a,
+	0x8d, 0x08, 0xdf, 0x05, 0xc6, 0xef, 0xb1, 0xb6, 0x77, 0x32, 0x2f, 0x64, 0xea, 0xb5, 0xc9, 0x13,
+	0xaf, 0x33, 0x10, 0x6b, 0xa8, 0xdb, 0x5a, 0xe0, 0xef, 0x74, 0x06, 0xbc, 0xc3, 0x98, 0x56, 0x90,
+	0x7b, 0x7d, 0xa6, 0xc1, 0x89, 0x26, 0x2d, 0x67, 0x4e, 0xc2, 0x96, 0x66, 0xf9, 0x2e, 0x2c, 0x08,
+	0x46, 0x5b, 0xaa, 0xd2, 0x5d, 0x58, 0x08, 0x2b, 0x9e, 0xc2, 0xb9, 0x4e, 0x27, 0x90, 0x68, 0x25,
+	0xd6, 0x69, 0xc5, 0x91, 0x0c, 0x54, 0x98, 0xa1, 0x0a, 0xe7, 0x32, 0x03, 0xb1, 0x41, 0x33, 0x44,
+	0xf6, 0x4a, 0x66, 0x10, 0x24, 0x05, 0xb8, 0xa9, 0x4e, 0x81, 0x92, 0x6c, 0x92, 0x24, 0x32, 0x4c,
+	0xb2, 0xcb, 0x9a, 0xca, 0xe9, 0x29, 0xb8, 0x90, 0xa3, 0x85, 0xf1, 0x35, 0x02, 0x03, 0xc5, 0x6f,
+	0xb3, 0x96, 0xd5, 0xe9, 0x38, 0x29, 0x6d, 0x52, 0x94, 0xc3, 0xd2, 0x0d, 0xc5, 0x56, 0xac, 0x8a,
+	0x4e, 0xc7, 0xa7, 0xf6, 0x2d, 0x32, 0xbe, 0xc7, 0x36, 0x2a, 0x95, 0x74, 0x20, 0x45, 0x3b, 0xd6,
+	0x1e, 0x35, 0x7d, 0x07, 0x32, 0xd4, 0x4d, 0x41, 0xe1, 0x75, 0x2e, 0xb1, 0x6e, 0xa8, 0xda, 0xa6,
+	0xba, 0x2d, 0x70, 0x94, 0x1e, 0x32, 0xbe, 0x28, 0x8d, 0x69, 0x39, 0x8a, 0xb7, 0x17, 0x22, 0x31,
+	0xf7, 0x01, 0x6b, 0x57, 0xb9, 0x27, 0xd2, 0x6b, 0x5f, 0x2a, 0x10, 0x5f, 0xa0, 0xb8, 0x45, 0xf9,
+	0x7f, 0x8a, 0x94, 0x77, 0xd8, 0xfa, 0x4c, 0x99, 0x8f, 0xc4, 0xe5, 0x68, 0x00, 0x12, 0xe5, 0x23,
+	0xfe, 0x90, 0xf1, 0xea, 0x40, 0xac, 0x33, 0x67, 0x9a, 0xaa, 0x7e, 0x05, 0x65, 0xed, 0x18, 0x79,
+	0x43, 0x81, 0x81, 0x0a, 0x3e, 0x2d, 0xbc, 0xf4, 0x20, 0xbe, 0x24, 0x9f, 0xe2, 0x20, 0x98, 0xd0,
+	0xc1, 0x04, 0x64, 0x01, 0x2a, 0x91, 0x5e, 0x5c, 0xa5, 0x42, 0x54, 0xa8, 0xef, 0xc3, 0x81, 0xa4,
+	0x26, 0xb3, 0x13, 0xf0, 0xa4, 0x10, 0x74, 0x20, 0x33, 0xd6, 0x47, 0x9f, 0xa6, 0x0e, 0x64, 0x14,
+	0x5c, 0xa3, 0x65, 0x46, 0x42, 0xe1, 0xd2, 0xaa, 0x2a, 0xbc, 0x43, 0xe1, 0x48, 0xfa, 0x3e, 0xd8,
+	0x38, 0x4d, 0x93, 0x05, 0xe7, 0xed, 0xd2, 0x81, 0xa5, 0xe9, 0x60, 0xee, 0xbd, 0x1b, 0x8c, 0xc9,
+	0x94, 0x6e, 0x93, 0x56, 0xe2, 0x3a, 0xcd, 0x11, 0xc9, 0x40, 0x85, 0x4a, 0x15, 0xd2, 0x26, 0x45,
+	0x28, 0x85, 0xf4, 0xe2, 0x06, 0xc5, 0x0b, 0x69, 0xdf, 0x42, 0xee, 0xfb, 0x3e, 0x58, 0x06, 0xe3,
+	0xb8, 0xff, 0x0e, 0x59, 0x26, 0x44, 0xab, 0x12, 0x64, 0x85, 0x1c, 0x97, 0x31, 0x7c, 0x93, 0x4a,
+	0x80, 0x88, 0x04, 0xbb, 0xac, 0x99, 0x4e, 0x93, 0xbc, 0xcc, 0x86, 0xe0, 0xc4, 0x1e, 0xbd, 0x9d,
+	0x4e, 0x5f, 0xe1, 0x98, 0xdf, 0x65, 0x5b, 0x53, 0x39, 0xd1, 0x4a, 0xfb, 0x8b, 0xc4, 0x82, 0xd3,
+	0x46, 0x89, 0x5b, 0x74, 0x9a, 0x15, 0x7e, 0x83, 0x94, 0x5f, 0x65, 0x0d, 0xed, 0x8d, 0x0d, 0xeb,
+	0xef, 0xa2, 0xa0, 0x1e, 0x86, 0x03, 0xc5, 0xaf, 0xb1, 0x35, 0xe3, 0x14, 0xd9, 0x79, 0x1f, 0x23,
+	0x0d, 0x1c, 0x0f, 0x14, 0x5e, 0x71, 0x9d, 0x8e, 0x83, 0x4d, 0x95, 0x83, 0xa2, 0x10, 0xb7, 0xe7,
+	0x66, 0x2e, 0x6d, 0x1f, 0x59, 0x65, 0x66, 0x50, 0x68, 0x67, 0x2f, 0xee, 0xcc, 0xcd, 0x0c, 0xea,
+	0xd4, 0xd2, 0x19, 0x7a, 0xa7, 0x6d, 0x62, 0x4b, 0x67, 0x4d, 0x01, 0xe2, 0x2b, 0x3a, 0xc3, 0xc0,
+	0xde, 0x10, 0xe2, 0x8f, 0xd8, 0x65, 0x2a, 0xc2, 0x62, 0xb7, 0xd0, 0x4a, 0xdc, 0x45, 0x29, 0xc7,
+	0xd8, 0xbb, 0x79, 0x68, 0xa0, 0xf8, 0x53, 0x76, 0x75, 0x71, 0xd2, 0x78, 0x25, 0xf1, 0x5e, 0x1f,
+	0xe0, 0x4b, 0x57, 0x16, 0xe6, 0xa7, 0x28, 0xde, 0xf0, 0xfb, 0x6c, 0x1b, 0xde, 0x7b, 0x70, 0xb9,
+	0x9c, 0x24, 0xb3, 0x7d, 0xdf, 0xa3, 0xab, 0x55, 0x05, 0x5e, 0xc7, 0xfd, 0x07, 0x77, 0x9a, 0xd2,
+	0x43, 0xa2, 0x33, 0x39, 0x02, 0x71, 0x3f, 0xba, 0x33, 0xa0, 0x41, 0x20, 0xa1, 0xfa, 0x0a, 0xac,
+	0x74, 0x1e, 0x6f, 0x01, 0x26, 0x7f, 0x40, 0xd5, 0x9f, 0xe3, 0xaa, 0xaf, 0x54, 0x06, 0xc2, 0x6e,
+	0xfa, 0x90, 0x4a, 0x10, 0x19, 0xf6, 0xd3, 0x5d, 0xd6, 0x2c, 0x8b, 0x6a, 0x0b, 0x87, 0x74, 0xcc,
+	0x01, 0xe0, 0xfb, 0x77, 0x58, 0x4b, 0xe7, 0x53, 0x13, 0xfa, 0x52, 0x34, 0x42, 0x0f, 0x15, 0x9b,
+	0x91, 0x46, 0x37, 0x84, 0x1e, 0x69, 0xc2, 0x8d, 0x1f, 0x25, 0xc1, 0xdf, 0xe2, 0x28, 0xf6, 0x48,
+	0x62, 0xcf, 0x83, 0x9b, 0x76, 0xd8, 0x9a, 0xd2, 0x85, 0x97, 0x79, 0x0a, 0xe2, 0x51, 0xec, 0x5e,
+	0x71, 0xcc, 0x1f, 0xb0, 0x6d, 0xe3, 0xcf, 0x43, 0x49, 0xf2, 0x33, 0xe3, 0x32, 0x6c, 0x1b, 0xe2,
+	0x6b, 0xba, 0xd0, 0x18, 0x18, 0xcc, 0xf9, 0x67, 0xed, 0x41, 0x7a, 0x71, 0xfc, 0x59, 0x7b, 0x90,
+	0x9e, 0x6a, 0x33, 0xef, 0x4b, 0x41, 0xf3, 0xb8, 0xaa, 0xcd, 0x0c, 0xff, 0x9f, 0x30, 0x1f, 0x89,
+	0x6f, 0xfe, 0x2b, 0xcc, 0x47, 0xa1, 0x08, 0x64, 0x12, 0x07, 0x85, 0x35, 0x79, 0x01, 0xe2, 0x09,
+	0x15, 0x01, 0xe9, 0x49, 0x84, 0x41, 0x36, 0x73, 0x2d, 0xd9, 0xf6, 0x29, 0xc9, 0x2a, 0xdb, 0x92,
+	0x6f, 0x43, 0x5a, 0x67, 0xac, 0x39, 0x3b, 0x9b, 0xe9, 0xbe, 0x8d, 0x69, 0x09, 0x57, 0x42, 0xce,
+	0x56, 0xbc, 0xb6, 0x85, 0xf8, 0x8e, 0xbe, 0xba, 0xe1, 0x39, 0x38, 0x63, 0xd1, 0x71, 0xdf, 0x93,
+	0x33, 0xe6, 0x36, 0xeb, 0xde, 0x62, 0xab, 0xcf, 0xce, 0xcb, 0x7c, 0xcc, 0x05, 0x6b, 0x3c, 0x33,
+	0xb9, 0x87, 0xdc, 0xe3, 0x87, 0x7c, 0xe3, 0xa4, 0x1a, 0x76, 0x5f, 0xb3, 0x8d, 0x53, 0x3b, 0x31,
+	0x52, 0x85, 0x6b, 0x5e, 0x16, 0x41, 0xf9, 0x33, 0x14, 0x45, 0x70, 0x1a, 0x7d, 0xf2, 0xab, 0x21,
+	0xbf, 0xc3, 0x56, 0x82, 0x45, 0xf0, 0xbb, 0xdf, 0x3a, 0xde, 0xee, 0x2d, 0xbe, 0x16, 0x02, 0x27,
+	0x18, 0xbe, 0xff, 0x98, 0xb5, 0xff, 0x1d, 0xe1, 0xeb, 0xac, 0x71, 0x9a, 0x8f, 0x73, 0xf3, 0x5b,
+	0xde, 0x5e, 0xe2, 0x75, 0xb6, 0xfc, 0x7a, 0xdc, 0xae, 0x71, 0xc6, 0xea, 0x3f, 0x4a, 0x3d, 0x01,
+	0xd5, 0x5e, 0x3e, 0xbe, 0xcb, 0x1a, 0x6f, 0xe9, 0xeb, 0xc6, 0xaf, 0xb3, 0xe6, 0x4b, 0xf0, 0x27,
+	0xf8, 0xeb, 0xc2, 0xeb, 0x3d, 0xfc, 0x67, 0xd9, 0x59, 0xc5, 0xbf, 0x93, 0xee, 0xd2, 0xf1, 0x13,
+	0xd6, 0x7a, 0x59, 0xd2, 0xf4, 0x51, 0xbf, 0xcf, 0xea, 0x94, 0x8f, 0xd7, 0x7b, 0xb8, 0xd9, 0x9d,
+	0xcd, 0xcf, 0x96, 0xd6, 0x5d, 0x3a, 0xa8, 0xfd, 0xf0, 0xe2, 0xcf, 0x8f, 0x9d, 0xda, 0x87, 0x8f,
+	0x9d, 0xda, 0xdf, 0x1f, 0x3b, 0xb5, 0xdf, 0x3f, 0x75, 0x96, 0x3e, 0x7c, 0xea, 0x2c, 0xfd, 0xf5,
+	0xa9, 0xb3, 0xf4, 0xcb, 0x83, 0x91, 0xf6, 0xe7, 0xe5, 0xb0, 0x97, 0x9a, 0xec, 0xe8, 0xd7, 0x32,
+	0x07, 0x07, 0x17, 0xa9, 0x2c, 0xca, 0x91, 0x3c, 0x1a, 0x99, 0xb1, 0xf6, 0x87, 0x23, 0x67, 0xd3,
+	0x43, 0x05, 0x99, 0x39, 0xb2, 0xc3, 0x61, 0x1d, 0x7f, 0xa5, 0x1e, 0xff, 0x13, 0x00, 0x00, 0xff,
+	0xff, 0x06, 0x51, 0x6b, 0xa2, 0x5d, 0x09, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -262,6 +890,112 @@ var _Service_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
+	Metadata: "pb/report.proto",
+}
+
+// GuploadServiceClient is the client API for GuploadService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type GuploadServiceClient interface {
+	Upload(ctx context.Context, opts ...grpc.CallOption) (GuploadService_UploadClient, error)
+}
+
+type guploadServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewGuploadServiceClient(cc *grpc.ClientConn) GuploadServiceClient {
+	return &guploadServiceClient{cc}
+}
+
+func (c *guploadServiceClient) Upload(ctx context.Context, opts ...grpc.CallOption) (GuploadService_UploadClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_GuploadService_serviceDesc.Streams[0], "/GuploadService/Upload", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &guploadServiceUploadClient{stream}
+	return x, nil
+}
+
+type GuploadService_UploadClient interface {
+	Send(*Chunk) error
+	CloseAndRecv() (*UploadStatus, error)
+	grpc.ClientStream
+}
+
+type guploadServiceUploadClient struct {
+	grpc.ClientStream
+}
+
+func (x *guploadServiceUploadClient) Send(m *Chunk) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *guploadServiceUploadClient) CloseAndRecv() (*UploadStatus, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(UploadStatus)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// GuploadServiceServer is the server API for GuploadService service.
+type GuploadServiceServer interface {
+	Upload(GuploadService_UploadServer) error
+}
+
+// UnimplementedGuploadServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedGuploadServiceServer struct {
+}
+
+func (*UnimplementedGuploadServiceServer) Upload(srv GuploadService_UploadServer) error {
+	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
+}
+
+func RegisterGuploadServiceServer(s *grpc.Server, srv GuploadServiceServer) {
+	s.RegisterService(&_GuploadService_serviceDesc, srv)
+}
+
+func _GuploadService_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(GuploadServiceServer).Upload(&guploadServiceUploadServer{stream})
+}
+
+type GuploadService_UploadServer interface {
+	SendAndClose(*UploadStatus) error
+	Recv() (*Chunk, error)
+	grpc.ServerStream
+}
+
+type guploadServiceUploadServer struct {
+	grpc.ServerStream
+}
+
+func (x *guploadServiceUploadServer) SendAndClose(m *UploadStatus) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *guploadServiceUploadServer) Recv() (*Chunk, error) {
+	m := new(Chunk)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+var _GuploadService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "GuploadService",
+	HandlerType: (*GuploadServiceServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Upload",
+			Handler:       _GuploadService_Upload_Handler,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "pb/report.proto",
 }
 
@@ -345,10 +1079,479 @@ func (m *DataDb) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintReport(dAtA, i, uint64(len(m.Name)))
+	if len(m.DriverName) > 0 {
+		i -= len(m.DriverName)
+		copy(dAtA[i:], m.DriverName)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DriverName)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0xca
+	}
+	if len(m.Tips) > 0 {
+		i -= len(m.Tips)
+		copy(dAtA[i:], m.Tips)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.Tips)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0xc2
+	}
+	if len(m.DropoffAddress) > 0 {
+		i -= len(m.DropoffAddress)
+		copy(dAtA[i:], m.DropoffAddress)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DropoffAddress)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0xba
+	}
+	if len(m.PickupAddress) > 0 {
+		i -= len(m.PickupAddress)
+		copy(dAtA[i:], m.PickupAddress)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PickupAddress)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0xb2
+	}
+	if len(m.MsakuResponse) > 0 {
+		i -= len(m.MsakuResponse)
+		copy(dAtA[i:], m.MsakuResponse)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.MsakuResponse)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0xaa
+	}
+	if len(m.DestinationLng) > 0 {
+		i -= len(m.DestinationLng)
+		copy(dAtA[i:], m.DestinationLng)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DestinationLng)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0xa2
+	}
+	if len(m.DestinationLat) > 0 {
+		i -= len(m.DestinationLat)
+		copy(dAtA[i:], m.DestinationLat)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DestinationLat)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0x9a
+	}
+	if len(m.PickUpLat) > 0 {
+		i -= len(m.PickUpLat)
+		copy(dAtA[i:], m.PickUpLat)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PickUpLat)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0x92
+	}
+	if len(m.OtherInformation) > 0 {
+		i -= len(m.OtherInformation)
+		copy(dAtA[i:], m.OtherInformation)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.OtherInformation)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0x8a
+	}
+	if len(m.Distance) > 0 {
+		i -= len(m.Distance)
+		copy(dAtA[i:], m.Distance)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.Distance)))
+		i--
+		dAtA[i] = 0x3
+		i--
+		dAtA[i] = 0x82
+	}
+	if len(m.PostingDate) > 0 {
+		i -= len(m.PostingDate)
+		copy(dAtA[i:], m.PostingDate)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PostingDate)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xfa
+	}
+	if len(m.InvoiceNumber) > 0 {
+		i -= len(m.InvoiceNumber)
+		copy(dAtA[i:], m.InvoiceNumber)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.InvoiceNumber)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xf2
+	}
+	if len(m.UserName) > 0 {
+		i -= len(m.UserName)
+		copy(dAtA[i:], m.UserName)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.UserName)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xea
+	}
+	if len(m.AccountCode) > 0 {
+		i -= len(m.AccountCode)
+		copy(dAtA[i:], m.AccountCode)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.AccountCode)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xe2
+	}
+	if len(m.DepartmentName) > 0 {
+		i -= len(m.DepartmentName)
+		copy(dAtA[i:], m.DepartmentName)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DepartmentName)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xda
+	}
+	if len(m.RouteImage) > 0 {
+		i -= len(m.RouteImage)
+		copy(dAtA[i:], m.RouteImage)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.RouteImage)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xd2
+	}
+	if len(m.ExternalOrderId) > 0 {
+		i -= len(m.ExternalOrderId)
+		copy(dAtA[i:], m.ExternalOrderId)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.ExternalOrderId)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xca
+	}
+	if len(m.TripPurposedriverName) > 0 {
+		i -= len(m.TripPurposedriverName)
+		copy(dAtA[i:], m.TripPurposedriverName)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.TripPurposedriverName)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xc2
+	}
+	if len(m.MsakuTransactionId) > 0 {
+		i -= len(m.MsakuTransactionId)
+		copy(dAtA[i:], m.MsakuTransactionId)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.MsakuTransactionId)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xba
+	}
+	if len(m.TripPurpose) > 0 {
+		i -= len(m.TripPurpose)
+		copy(dAtA[i:], m.TripPurpose)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.TripPurpose)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xb2
+	}
+	if len(m.PickedUpAt) > 0 {
+		i -= len(m.PickedUpAt)
+		copy(dAtA[i:], m.PickedUpAt)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PickedUpAt)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xaa
+	}
+	if len(m.PickupAdress) > 0 {
+		i -= len(m.PickupAdress)
+		copy(dAtA[i:], m.PickupAdress)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PickupAdress)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0xa2
+	}
+	if len(m.OrderId) > 0 {
+		i -= len(m.OrderId)
+		copy(dAtA[i:], m.OrderId)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.OrderId)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0x9a
+	}
+	if len(m.ItopId) > 0 {
+		i -= len(m.ItopId)
+		copy(dAtA[i:], m.ItopId)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.ItopId)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0x92
+	}
+	if len(m.ValidityPeriod) > 0 {
+		i -= len(m.ValidityPeriod)
+		copy(dAtA[i:], m.ValidityPeriod)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.ValidityPeriod)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0x8a
+	}
+	if len(m.CvNumber) > 0 {
+		i -= len(m.CvNumber)
+		copy(dAtA[i:], m.CvNumber)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.CvNumber)))
+		i--
+		dAtA[i] = 0x2
+		i--
+		dAtA[i] = 0x82
+	}
+	if len(m.MsakuState) > 0 {
+		i -= len(m.MsakuState)
+		copy(dAtA[i:], m.MsakuState)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.MsakuState)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xfa
+	}
+	if len(m.SapState) > 0 {
+		i -= len(m.SapState)
+		copy(dAtA[i:], m.SapState)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.SapState)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xf2
+	}
+	if len(m.SapSentAt) > 0 {
+		i -= len(m.SapSentAt)
+		copy(dAtA[i:], m.SapSentAt)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.SapSentAt)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xea
+	}
+	if len(m.AccountId) > 0 {
+		i -= len(m.AccountId)
+		copy(dAtA[i:], m.AccountId)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.AccountId)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xe2
+	}
+	if len(m.CcIdentifier) > 0 {
+		i -= len(m.CcIdentifier)
+		copy(dAtA[i:], m.CcIdentifier)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.CcIdentifier)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xda
+	}
+	if len(m.UpdatedAt) > 0 {
+		i -= len(m.UpdatedAt)
+		copy(dAtA[i:], m.UpdatedAt)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.UpdatedAt)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xd2
+	}
+	if len(m.CreatedAt) > 0 {
+		i -= len(m.CreatedAt)
+		copy(dAtA[i:], m.CreatedAt)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.CreatedAt)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xca
+	}
+	if len(m.CompletedAt) > 0 {
+		i -= len(m.CompletedAt)
+		copy(dAtA[i:], m.CompletedAt)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.CompletedAt)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xc2
+	}
+	if len(m.ReleasedAt) > 0 {
+		i -= len(m.ReleasedAt)
+		copy(dAtA[i:], m.ReleasedAt)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.ReleasedAt)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xba
+	}
+	if len(m.State) > 0 {
+		i -= len(m.State)
+		copy(dAtA[i:], m.State)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.State)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xb2
+	}
+	if len(m.PaymentProfileId) > 0 {
+		i -= len(m.PaymentProfileId)
+		copy(dAtA[i:], m.PaymentProfileId)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PaymentProfileId)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xaa
+	}
+	if len(m.PickUpLng) > 0 {
+		i -= len(m.PickUpLng)
+		copy(dAtA[i:], m.PickUpLng)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PickUpLng)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0xa2
+	}
+	if len(m.PickUpLatitude) > 0 {
+		i -= len(m.PickUpLatitude)
+		copy(dAtA[i:], m.PickUpLatitude)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PickUpLatitude)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x9a
+	}
+	if len(m.DestinationSuburb) > 0 {
+		i -= len(m.DestinationSuburb)
+		copy(dAtA[i:], m.DestinationSuburb)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DestinationSuburb)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x92
+	}
+	if len(m.DestinationArea) > 0 {
+		i -= len(m.DestinationArea)
+		copy(dAtA[i:], m.DestinationArea)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DestinationArea)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x8a
+	}
+	if len(m.PickUpArea) > 0 {
+		i -= len(m.PickUpArea)
+		copy(dAtA[i:], m.PickUpArea)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PickUpArea)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x82
+	}
+	if len(m.PickUpSuburb) > 0 {
+		i -= len(m.PickUpSuburb)
+		copy(dAtA[i:], m.PickUpSuburb)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PickUpSuburb)))
+		i--
+		dAtA[i] = 0x7a
+	}
+	if len(m.DriverId) > 0 {
+		i -= len(m.DriverId)
+		copy(dAtA[i:], m.DriverId)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DriverId)))
+		i--
+		dAtA[i] = 0x72
+	}
+	if len(m.ServiceType) > 0 {
+		i -= len(m.ServiceType)
+		copy(dAtA[i:], m.ServiceType)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.ServiceType)))
+		i--
+		dAtA[i] = 0x6a
+	}
+	if len(m.VehicleName) > 0 {
+		i -= len(m.VehicleName)
+		copy(dAtA[i:], m.VehicleName)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.VehicleName)))
+		i--
+		dAtA[i] = 0x62
+	}
+	if len(m.VehicleId) > 0 {
+		i -= len(m.VehicleId)
+		copy(dAtA[i:], m.VehicleId)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.VehicleId)))
+		i--
+		dAtA[i] = 0x5a
+	}
+	if len(m.PaymentType) > 0 {
+		i -= len(m.PaymentType)
+		copy(dAtA[i:], m.PaymentType)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PaymentType)))
+		i--
+		dAtA[i] = 0x52
+	}
+	if len(m.Identifier) > 0 {
+		i -= len(m.Identifier)
+		copy(dAtA[i:], m.Identifier)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.Identifier)))
+		i--
+		dAtA[i] = 0x4a
+	}
+	if len(m.TransactionTime) > 0 {
+		i -= len(m.TransactionTime)
+		copy(dAtA[i:], m.TransactionTime)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.TransactionTime)))
+		i--
+		dAtA[i] = 0x42
+	}
+	if len(m.PaymentToken) > 0 {
+		i -= len(m.PaymentToken)
+		copy(dAtA[i:], m.PaymentToken)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PaymentToken)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.PromoCode) > 0 {
+		i -= len(m.PromoCode)
+		copy(dAtA[i:], m.PromoCode)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PromoCode)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.PaidAmount) > 0 {
+		i -= len(m.PaidAmount)
+		copy(dAtA[i:], m.PaidAmount)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.PaidAmount)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.DiscountAmt) > 0 {
+		i -= len(m.DiscountAmt)
+		copy(dAtA[i:], m.DiscountAmt)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.DiscountAmt)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Extra) > 0 {
+		i -= len(m.Extra)
+		copy(dAtA[i:], m.Extra)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.Extra)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Fare) > 0 {
+		i -= len(m.Fare)
+		copy(dAtA[i:], m.Fare)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.Fare)))
 		i--
 		dAtA[i] = 0x12
 	}
@@ -356,6 +1559,71 @@ func (m *DataDb) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.Id)
 		copy(dAtA[i:], m.Id)
 		i = encodeVarintReport(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *Chunk) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Chunk) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Chunk) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Content) > 0 {
+		i -= len(m.Content)
+		copy(dAtA[i:], m.Content)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.Content)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UploadStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UploadStatus) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UploadStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Code != 0 {
+		i = encodeVarintReport(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintReport(dAtA, i, uint64(len(m.Message)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -407,9 +1675,258 @@ func (m *DataDb) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovReport(uint64(l))
 	}
-	l = len(m.Name)
+	l = len(m.Fare)
 	if l > 0 {
 		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.Extra)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.DiscountAmt)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.PaidAmount)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.PromoCode)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.PaymentToken)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.TransactionTime)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.Identifier)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.PaymentType)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.VehicleId)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.VehicleName)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.ServiceType)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.DriverId)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.PickUpSuburb)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	l = len(m.PickUpArea)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.DestinationArea)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.DestinationSuburb)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.PickUpLatitude)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.PickUpLng)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.PaymentProfileId)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.State)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.ReleasedAt)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.CompletedAt)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.CreatedAt)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.UpdatedAt)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.CcIdentifier)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.AccountId)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.SapSentAt)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.SapState)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.MsakuState)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.CvNumber)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.ValidityPeriod)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.ItopId)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.OrderId)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.PickupAdress)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.PickedUpAt)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.TripPurpose)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.MsakuTransactionId)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.TripPurposedriverName)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.ExternalOrderId)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.RouteImage)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.DepartmentName)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.AccountCode)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.UserName)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.InvoiceNumber)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.PostingDate)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.Distance)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.OtherInformation)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.PickUpLat)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.DestinationLat)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.DestinationLng)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.MsakuResponse)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.PickupAddress)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.DropoffAddress)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.Tips)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	l = len(m.DriverName)
+	if l > 0 {
+		n += 2 + l + sovReport(uint64(l))
+	}
+	return n
+}
+
+func (m *Chunk) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Content)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	return n
+}
+
+func (m *UploadStatus) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovReport(uint64(l))
+	}
+	if m.Code != 0 {
+		n += 1 + sovReport(uint64(m.Code))
 	}
 	return n
 }
@@ -617,7 +2134,7 @@ func (m *DataDb) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Fare", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -645,8 +2162,1953 @@ func (m *DataDb) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			m.Fare = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Extra", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Extra = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DiscountAmt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DiscountAmt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PaidAmount", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PaidAmount = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PromoCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PromoCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PaymentToken", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PaymentToken = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TransactionTime", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TransactionTime = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Identifier", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Identifier = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PaymentType", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PaymentType = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VehicleId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.VehicleId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 12:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VehicleName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.VehicleName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 13:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ServiceType", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ServiceType = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 14:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DriverId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DriverId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 15:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PickUpSuburb", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PickUpSuburb = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 16:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PickUpArea", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PickUpArea = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 17:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DestinationArea", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DestinationArea = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 18:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DestinationSuburb", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DestinationSuburb = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 19:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PickUpLatitude", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PickUpLatitude = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 20:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PickUpLng", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PickUpLng = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 21:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PaymentProfileId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PaymentProfileId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 22:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field State", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.State = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 23:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ReleasedAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ReleasedAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 24:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CompletedAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CompletedAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 25:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CreatedAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 26:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UpdatedAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 27:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CcIdentifier", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CcIdentifier = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 28:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AccountId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AccountId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 29:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SapSentAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SapSentAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 30:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SapState", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SapState = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 31:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MsakuState", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MsakuState = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 32:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CvNumber", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CvNumber = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 33:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ValidityPeriod", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ValidityPeriod = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 34:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ItopId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ItopId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 35:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrderId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OrderId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 36:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PickupAdress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PickupAdress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 37:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PickedUpAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PickedUpAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 38:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TripPurpose", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TripPurpose = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 39:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MsakuTransactionId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MsakuTransactionId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 40:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TripPurposedriverName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TripPurposedriverName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 41:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExternalOrderId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ExternalOrderId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 42:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RouteImage", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RouteImage = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 43:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DepartmentName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DepartmentName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 44:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AccountCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AccountCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 45:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UserName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UserName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 46:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field InvoiceNumber", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.InvoiceNumber = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 47:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PostingDate", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PostingDate = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 48:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Distance", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Distance = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 49:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OtherInformation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OtherInformation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 50:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PickUpLat", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PickUpLat = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 51:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DestinationLat", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DestinationLat = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 52:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DestinationLng", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DestinationLng = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 53:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MsakuResponse", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MsakuResponse = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 54:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PickupAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PickupAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 55:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DropoffAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DropoffAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 56:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tips", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tips = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 57:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DriverName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DriverName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReport(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReport
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Chunk) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReport
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Chunk: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Chunk: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Content", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Content = append(m.Content[:0], dAtA[iNdEx:postIndex]...)
+			if m.Content == nil {
+				m.Content = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipReport(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthReport
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UploadStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowReport
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UploadStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UploadStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthReport
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthReport
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowReport
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= UploadStatusCode(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipReport(dAtA[iNdEx:])

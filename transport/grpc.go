@@ -7,6 +7,8 @@ import (
 	"report/repository"
 
 	"github.com/go-kit/kit/log"
+	"github.com/webx-top/echo/logger/zerolog"
+	"google.golang.org/grpc"
 
 	// apmgrpc "git.bluebird.id/lib/apm/grpc"
 
@@ -18,6 +20,13 @@ import (
 //GrpcServer ....
 type GrpcServer struct {
 	getReport gt.Handler
+}
+
+type ClientGRPC struct {
+	logger    zerolog.Logger
+	conn      *grpc.ClientConn
+	client    pb.GuploadServiceClient
+	chunkSize int
 }
 
 // //GRPCServerRun run grpc server
@@ -112,13 +121,6 @@ func decodeGetReport(ctx context.Context, request interface{}) (interface{}, err
 	return &pb.Empty{}, nil
 }
 
-// func encodeGetReport(ctx context.Context, resp interface{}) (interface{}, error) {
-// 	println("hmmmmmmmmm")
-// 	resp = resp.(endpoint.OtherResp)
-// 	println("resp: ", resp)
-// 	return &pb.Data{Id: resp.(pb.Data).Id, Name: resp.(pb.Data).Name}, nil
-// }
-
 func encodeGetReport(ctx context.Context, response interface{}) (interface{}, error) {
 	var transforms []*pb.DataDb
 	s := reflect.ValueOf(response)
@@ -126,9 +128,164 @@ func encodeGetReport(ctx context.Context, response interface{}) (interface{}, er
 	for i := 0; i < s.Len(); i++ {
 		var row pb.DataDb
 		curentData := s.Index(i).Interface().(repository.Data)
-		row.Id = curentData.ID
-		row.Name = curentData.Name
+		// row.Id = curentData.ID
+		// row.Fare = curentData.Name
+		// row.Extra = curentData.AccountCode
+
+		row.Id = *curentData.ID
+		row.Fare = *curentData.Fare
+		row.Extra = *curentData.Extra
+		row.DiscountAmt = *curentData.DiscountAmt
+		row.PaidAmount = *curentData.PaidAmount
+		row.PromoCode = *curentData.PromoCode
+		row.PaymentToken = *curentData.PaymentToken
+		row.TransactionTime = *curentData.TransactionTime
+		row.Identifier = *curentData.Identifier
+		row.PaymentType = *curentData.PaymentType
+		row.VehicleId = *curentData.VehicleId
+		row.VehicleName = *curentData.VehicleName
+		row.ServiceType = *curentData.ServiceType
+		row.DriverId = *curentData.DriverID
+		row.PickUpSuburb = *curentData.PickUpSuburb
+		row.PickUpArea = *curentData.PickUpArea
+		row.DestinationArea = *curentData.DestinationArea
+		row.DestinationSuburb = *curentData.DSestinationSuburb
+		// row.PickUpLatitude = curentData.PickUpLatitude
+		row.DestinationLat = *curentData.DestinationLat
+		row.PickUpLng = *curentData.PickUpLng
+		row.PaymentProfileId = *curentData.PaymentProfileID
+		row.State = *curentData.State
+		row.ReleasedAt = *curentData.ReleasedAt
+		row.CompletedAt = *curentData.CompletedAt
+		row.CreatedAt = *curentData.CreatedAt
+		row.UpdatedAt = *curentData.Updated_at
+		row.CcIdentifier = *curentData.CcIdentifier
+		row.AccountId = *curentData.AccountID
+		row.SapSentAt = *curentData.SapSentAt
+		row.SapState = *curentData.SapState
+		row.MsakuState = *curentData.MsakuState
+		row.CvNumber = *curentData.CvNumber
+		row.ValidityPeriod = *curentData.ValidityPeriod
+		row.ItopId = *curentData.ItopID
+		row.OrderId = *curentData.OrderID
+		row.PickedUpAt = *curentData.PickedUp
+		row.TripPurpose = *curentData.TripPurpose
+		row.MsakuTransactionId = *curentData.MsakuTransactionID
+		row.ExternalOrderId = *curentData.ExternalOrderID
+		row.RouteImage = *curentData.RouteImage
+		row.DepartmentName = *curentData.DepartmentName
+		row.AccountCode = *curentData.AccountCode
+		row.UserName = *curentData.UserName
+		row.InvoiceNumber = *curentData.InvoiceNumber
+		row.PostingDate = *curentData.PostingDate
+		row.Distance = *curentData.Distance
+		row.OtherInformation = *curentData.OtherInformation
+		row.PickUpLat = *curentData.PickUpLat
+		row.DestinationLng = *curentData.DestinationLng
+		row.MsakuResponse = *curentData.MsakuResponse
+		row.PickupAddress = *curentData.PickupAddress
+		row.DropoffAddress = *curentData.DropoffAddress
+		row.Tips = *curentData.Tips
+		row.DriverName = *curentData.DriverName
+
+		// row.Id = curentData.ID
+		// row.Fare = curentData.Fare
+		// row.Extra = curentData.Extra
+		// row.DiscountAmt = curentData.DiscountAmt
+		// row.PaidAmount = curentData.PaidAmount
+		// row.PromoCode = curentData.PromoCode
+		// row.PaymentToken = curentData.PaymentToken
+		// row.TransactionTime = curentData.TransactionTime
+		// row.Identifier = curentData.Identifier
+		// row.PaymentType = curentData.PaymentType
+		// row.VehicleId = curentData.VehicleId
+		// row.VehicleName = curentData.VehicleName
+		// row.ServiceType = curentData.ServiceType
+		// row.DriverId = curentData.DriverID
+		// row.PickUpSuburb = curentData.PickUpSuburb
+		// row.PickUpArea = curentData.PickUpArea
+		// row.DestinationArea = curentData.DestinationArea
+		// row.DestinationSuburb = curentData.DSestinationSuburb
+		// // row.PickUpLatitude = curentData.PickUpLatitude
+		// row.DestinationLat = curentData.DestinationLat
+		// row.PickUpLng = curentData.PickUpLng
+		// row.PaymentProfileId = curentData.PaymentProfileID
+		// row.State = curentData.State
+		// row.ReleasedAt = curentData.ReleasedAt
+		// row.CompletedAt = curentData.CompletedAt
+		// row.CreatedAt = curentData.CreatedAt
+		// row.UpdatedAt = curentData.Updated_at
+		// row.CcIdentifier = curentData.CcIdentifier
+		// row.AccountId = curentData.AccountID
+		// row.SapSentAt = curentData.SapSentAt
+		// row.SapState = curentData.SapState
+		// row.MsakuState = curentData.MsakuState
+		// row.CvNumber = curentData.CvNumber
+		// row.ValidityPeriod = curentData.ValidityPeriod
+		// row.ItopId = curentData.ItopID
+		// row.OrderId = curentData.OrderID
+		// row.PickedUpAt = curentData.PickedUp
+		// row.TripPurpose = curentData.TripPurpose
+		// row.MsakuTransactionId = curentData.MsakuTransactionID
+		// row.ExternalOrderId = curentData.ExternalOrderID
+		// row.RouteImage = curentData.RouteImage
+		// row.DepartmentName = curentData.DepartmentName
+		// row.AccountCode = curentData.AccountCode
+		// row.UserName = curentData.UserName
+		// row.InvoiceNumber = curentData.InvoiceNumber
+		// row.PostingDate = curentData.PostingDate
+		// row.Distance = curentData.Distance
+		// row.OtherInformation = curentData.OtherInformation
+		// row.PickUpLat = curentData.PickUpLat
+		// row.DestinationLng = curentData.DestinationLng
+		// row.MsakuResponse = curentData.MsakuResponse
+		// row.PickupAddress = curentData.PickupAddress
+		// row.DropoffAddress = curentData.DropoffAddress
+		// row.Tips = curentData.Tips
+		// row.DriverName = curentData.DriverName
 		transforms = append(transforms, &row)
 	}
 	return &pb.Data{Data: transforms}, nil
 }
+
+// func (c *ClientGRPC) UploadFile(ctx context.Context, f string) (stats Stats, err error) {
+
+// 	// Get a file handle for the file we
+// 	// want to upload
+// 	file, err = os.Open(f)
+
+// 	// Open a stream-based connection with the
+// 	// gRPC server
+// 	stream, err := c.client.Upload(ctx)
+
+// 	// Start timing the execution
+// 	stats.StartedAt = time.Now()
+
+// 	// Allocate a buffer with `chunkSize` as the capacity
+// 	// and length (making a 0 array of the size of `chunkSize`)
+// 	buf = make([]byte, c.chunkSize)
+// 	for writing {
+// 		// put as many bytes as `chunkSize` into the
+// 		// buf array.
+// 		n, err = file.Read(buf)
+
+// 		// ... if `eof` --> `writing=false`...
+
+// 		stream.Send(&messaging.Chunk{
+// 			// because we might've read less than
+// 			// `chunkSize` we want to only send up to
+// 			// `n` (amount of bytes read).
+// 			// note: slicing (`:n`) won't copy the
+// 			// underlying data, so this as fast as taking
+// 			// a "pointer" to the underlying storage.
+// 			Content: buf[:n],
+// 		})
+// 	}
+
+// 	// keep track of the end time so that we can take the elapsed
+// 	// time later
+// 	stats.FinishedAt = time.Now()
+
+// 	// close
+// 	status, err = stream.CloseAndRecv()
+// }

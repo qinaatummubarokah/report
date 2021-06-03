@@ -9,9 +9,80 @@ message Data {
 
 message DataDb {
     string id = 1;
-    string name = 2;
+    string fare = 2;
+    string extra = 3;
+    string discount_amt = 4;
+    string paid_amount = 5;
+    string promo_code = 6;
+    string payment_token = 7;
+    string transaction_time = 8;
+    string identifier = 9;
+    string payment_type = 10;
+    string vehicle_id = 11;
+    string vehicle_name = 12;
+    string service_type = 13;
+    string driver_id = 14;
+    string pick_up_suburb = 15;
+    string pick_up_area = 16;
+    string destination_area = 17;
+    string destination_suburb = 18;
+    string pick_up_lat = 19;
+    string pick_up_lng = 20;
+    string payment_profile_id = 21;
+    string state = 22;
+    string released_at = 23;
+    string completed_at = 24;
+    string created_at = 25;
+    string updated_at = 26;
+    string cc_identifier = 27;
+    string account_id = 28;
+    string sap_sent_at = 29;
+    string sap_state = 30;
+    string msaku_state = 31;
+    string cv_number = 32;
+    string validity_period = 33;
+    string itop_id = 34;
+    string order_id = 35;
+    string pickup_address = 36;
+    string picked_up_at = 37;
+    string trip_purpose = 38;
+    string msaku_transaction_id = 39;
+    string external_order_id = 40;
+    string route_image = 41;
+    string department_name = 42;
+    string account_code = 43;
+    string user_name = 44;
+    string invoice_number = 45;
+    string posting_date = 46;
+    string distance = 47;
+    string other_information = 48;
+    string destination_lat = 49;
+    string destination_lng = 50;
+    string msaku_response = 51;
+    string dropoff_address = 52;
+    string tips = 53;
+    string driver_name = 54;
 }
 
 service Service {
   rpc GetReport(Empty) returns (Data){}
+}
+
+service GuploadService {
+        rpc Upload(stream Chunk) returns (UploadStatus) {}
+}
+
+message Chunk {
+        bytes Content = 1;
+}
+
+enum UploadStatusCode {
+        Unknown = 0;
+        Ok = 1;
+        Failed = 2;
+}
+
+message UploadStatus {
+        string Message = 1;
+        UploadStatusCode Code = 2;
 }
